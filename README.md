@@ -227,7 +227,7 @@ cd frontend && npm run lint && npm run build   # 前端 lint + 类型检查 + �
 - 模板列表 + 分类筛选 + 详情 + 上传位 + 提交前校验（数量/类型/大小）。
 - 后端多步骤异步任务引擎（素材检查→模拟生成→结果整理），失败中断、终态守卫、查询只读。
 - 前端异步状态管理（轮询 hook、未完成任务才轮询、查询异常不误标、卸载清理）。
-- 个人历史 + 刷新恢复；Docker Compose 三服务；GitHub Actions CI。
+- 个人历史 + 刷新恢复；Docker Compose 三服务；GitHub Actions CI **已实际运行并通过**（前端 lint/test/tsc/build、后端 test/build 全绿，见仓库 Actions 页）。
 - 关键测试：后端单测（步骤顺序、失败中断、终态守卫、查询只读）+ 前端行为测试（多任务互不串扰、查询异常与任务失败区分、轮询生命周期；Vitest + Testing Library，5 例）。
 
 **已知限制 / 实际投入**
