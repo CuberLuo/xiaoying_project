@@ -38,5 +38,4 @@ mock:
   # 指定哪一步失败：NONE | CHECK | GENERATE | FINALIZE
   fail-stage: ${MOCK_FAIL_STAGE:NONE}
   fail-reason: ${MOCK_FAIL_REASON:模拟生成失败（演示用）}
-  # 成功后写入的（假）结果地址前缀
-  result-base-url: ${MOCK_RESULT_BASE_URL:http://localhost:8080/static/results}
+  # 结果地址由 material.base-url + /files/results/{taskId}.svg 拼出，见 MockResultWriter

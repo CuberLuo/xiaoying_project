@@ -135,7 +135,8 @@ cd frontend && npm run lint && npm run build   # 前端 lint + 类型检查 + �
 | `mock.finalize-delay-ms` | 1500 | 步骤三「结果整理」模拟耗时 |
 | `mock.fail-stage` | NONE | 指定失败步骤：NONE/CHECK/GENERATE/FINALIZE |
 | `mock.fail-reason` | 模拟生成失败（演示用） | 失败原因文案 |
-| `mock.result-base-url` | http://localhost:8080/files/results | 结果地址前缀 |
+
+结果地址由 `material.base-url` + `/files/results/{taskId}.svg` 拼出（`/files/results/**` 映射到 `{upload-dir}/results/`）。
 
 以上均可通过环境变量覆盖（如 `MOCK_FAIL_STAGE=GENERATE`），或运行时经开发接口修改（见下）。
 

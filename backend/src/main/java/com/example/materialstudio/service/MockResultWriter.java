@@ -11,6 +11,9 @@ import java.nio.file.Paths;
 /**
  * 在“结果整理”阶段写一个本地占位结果文件（SVG），使前端能真实预览。
  * 不调用任何真实 AI，仅生成示意图。
+ *
+ * 结果地址 = material.base-url + /files/results/{taskId}.svg
+ * （/files/results/** 由 StaticResourceConfig 映射到 {upload-dir}/results/）
  */
 @Service
 public class MockResultWriter {
@@ -18,8 +21,8 @@ public class MockResultWriter {
     @Value("${material.upload-dir:./uploads}")
     private String uploadDir;
 
-    @Value("${mock.result-base-url:http://localhost:8080/files/results}")
-    private String resultBaseUrl;
+    @Value("${material.base-url:http://localhost:8080}")
+    private String baseUrl;
 
     public String writePlaceholder(String taskId, String templateTitle) {
         try {
@@ -36,7 +39,7 @@ public class MockResultWriter {
                     </svg>
                     """.formatted(templateTitle == null ? "结果预览" : templateTitle, taskId);
             Files.writeString(file, svg);
-            return resultBaseUrl.replace("/files/results", "") + "/files/results/" + taskId + ".svg";
+            return baseUrl + "/files/results/" + taskId + ".svg";
         } catch (IOException e) {
             throw new RuntimeException("写入模拟结果文件失败: " + e.getMessage(), e);
         }

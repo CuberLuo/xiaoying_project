@@ -16,7 +16,6 @@ public class MockProperties {
     private long finalizeDelayMs = 1500;
     private String failStage = "NONE";
     private String failReason = "模拟生成失败（演示用）";
-    private String resultBaseUrl = "http://localhost:8080/static/results";
 
     public long getCheckDelayMs() {
         return checkDelayMs;
@@ -56,13 +55,5 @@ public class MockProperties {
 
     public void setFailReason(String failReason) {
         this.failReason = failReason;
-    }
-
-    public String getResultBaseUrl() {
-        return resultBaseUrl;
-    }
-
-    public void setResultBaseUrl(String resultBaseUrl) {
-        this.resultBaseUrl = resultBaseUrl;
     }
 }
