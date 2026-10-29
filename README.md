@@ -260,6 +260,9 @@ cd frontend && npm run lint && npm run build   # 前端 lint + 类型检查 + �
 
 ---
 
-## 验收 commit
+## 仓库与验收 commit
 
-> 请以最近一次完整提交为准（仓库根目录即本交付）。压缩包不包含 `node_modules/`、`.next/`、后端 `target/`、`uploads/`。
+- 仓库地址：https://github.com/CuberLuo/xiaoying_project（public，`main` 分支）
+- 验收 commit：`3ec6326`（fix: 结果图地址拼接错误，包含此前全部交付内容）
+- CI：push 后自动执行前端 lint/test/tsc/build 与后端 test/build，运行记录见仓库 Actions 页
+- 压缩包不包含 `node_modules/`、`.next/`、后端 `target/`、`uploads/`
