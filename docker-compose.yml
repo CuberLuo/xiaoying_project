@@ -1,0 +1,64 @@
+# 一键起前端 / Java 后端 / MySQL（含初始化）
+# 用法：docker compose up --build
+# 启动后：前端 http://localhost:3000 ，后端 API http://localhost:8080
+services:
+  mysql:
+    image: mysql:8.0.39
+    container_name: ms_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: material_studio
+      MYSQL_USER: material
+      MYSQL_PASSWORD: material123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot123"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ms_backend
+    environment:
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_NAME: material_studio
+      DB_USERNAME: material
+      DB_PASSWORD: material123
+      UPLOAD_DIR: /app/uploads
+      BASE_URL: http://localhost:8080
+      MOCK_FAIL_STAGE: "NONE"
+    ports:
+      - "8080:8080"
+    volumes:
+      - backend_uploads:/app/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_BASE: http://localhost:8080
+        INTERNAL_API_BASE: http://backend:8080
+    container_name: ms_frontend
+    environment:
+      NEXT_PUBLIC_API_BASE: http://localhost:8080
+      INTERNAL_API_BASE: http://backend:8080
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
+  backend_uploads:

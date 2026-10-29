@@ -1,0 +1,7 @@
+target/
+uploads/
+.git/
+mvnw
+mvnw.cmd
+.mvn/
+*.iml

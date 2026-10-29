@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:material_studio}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+    username: ${DB_USERNAME:material}
+    password: ${DB_PASSWORD:material123}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 12MB
+  # 每次启动按 schema.sql 建表、data.sql 灌入种子模板（演示用，开发环境）
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+      continue-on-error: true
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.materialstudio.domain
+  configuration:
+    map-underscore-to-camel-case: true
+
+material:
+  # 素材与结果本地落盘目录（容器里挂数据卷）
+  upload-dir: ${UPLOAD_DIR:./uploads}
+  base-url: ${BASE_URL:http://localhost:8080}
+
+mock:
+  # 三步各自的模拟耗时（毫秒），调大便于观察“处理中”与多任务并发
+  check-delay-ms: ${MOCK_CHECK_DELAY_MS:1500}
+  generate-delay-ms: ${MOCK_GENERATE_DELAY_MS:3000}
+  finalize-delay-ms: ${MOCK_FINALIZE_DELAY_MS:1500}
+  # 指定哪一步失败：NONE | CHECK | GENERATE | FINALIZE
+  fail-stage: ${MOCK_FAIL_STAGE:NONE}
+  fail-reason: ${MOCK_FAIL_REASON:模拟生成失败（演示用）}
+  # 成功后写入的（假）结果地址前缀
+  result-base-url: ${MOCK_RESULT_BASE_URL:http://localhost:8080/static/results}
